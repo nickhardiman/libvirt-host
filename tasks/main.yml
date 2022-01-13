@@ -1,0 +1,5 @@
+---
+
+- include_tasks: libvirt-modular-daemons.yml
+- include_tasks: linux-bridge.yml
+

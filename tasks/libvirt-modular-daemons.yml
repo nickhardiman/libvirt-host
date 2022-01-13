@@ -1,0 +1,71 @@
+---
+# tasks file for virtualization-host
+
+- name: Install the 'Virtualization Host' environment group
+  dnf:
+    name: '@virtualization-host-environment'
+    state: present
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
+- name: enable libvirt's systemd socket files
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: yes
+    masked: no
+  loop:
+    - virtnetworkd-admin.socket
+    - virtnetworkd-ro.socket
+    - virtnetworkd.socket
+    - virtnodedevd-admin.socket
+    - virtnodedevd-ro.socket
+    - virtnodedevd.socket
+    - virtnwfilterd-admin.socket
+    - virtnwfilterd-ro.socket
+    - virtnwfilterd.socket
+    - virtqemud-admin.socket
+    - virtqemud-ro.socket
+    - virtqemud.socket
+    - virtsecretd-admin.socket
+    - virtsecretd-ro.socket
+    - virtsecretd.socket
+    - virtstoraged-admin.socket
+    - virtstoraged-ro.socket
+    - virtstoraged.socket
+
+- name: enable libvirt's systemd service files
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: yes
+    masked: no
+  loop:
+    - virtnetworkd.service
+    - virtnodedevd.service
+    - virtnwfilterd.service
+    - virtqemud.service
+    - virtsecretd.service
+    - virtstoraged.service
+
+- name: start libvirt's systemd socket files
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+  loop:
+    - virtnetworkd-admin.socket
+    - virtnetworkd-ro.socket
+    - virtnetworkd.socket
+    - virtnodedevd-admin.socket
+    - virtnodedevd-ro.socket
+    - virtnodedevd.socket
+    - virtnwfilterd-admin.socket
+    - virtnwfilterd-ro.socket
+    - virtnwfilterd.socket
+    - virtqemud-admin.socket
+    - virtqemud-ro.socket
+    - virtqemud.socket
+    - virtsecretd-admin.socket
+    - virtsecretd-ro.socket
+    - virtsecretd.socket
+    - virtstoraged-admin.socket
+    - virtstoraged-ro.socket
+    - virtstoraged.socket
+

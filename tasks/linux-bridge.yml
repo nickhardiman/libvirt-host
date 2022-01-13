@@ -1,0 +1,63 @@
+#
+# /usr/share/doc/rhel-system-roles/network/example-bridge_with_vlan-playbook.yml 
+- name: Install RPM package
+  dnf:
+    name: rhel-system-roles
+    state: present
+
+# use gather_facts to set ansible_python
+- name: use rhel-system-role network
+  vars:
+    network_connections:
+      #
+      # Create a bridge profile
+      - name: pubbr0
+        state: up
+        type: bridge
+        #interface_name: pubbr0 # defaults to the connection name
+        ip:
+          dhcp4: yes
+          auto6: yes
+      #
+      # set an ethernet port to the bridge
+      - name: pubbr0-enp2s0f0
+        state: up
+        type: ethernet
+        interface_name: enp2s0f0
+        controller: pubbr0
+        #controller: public-bridge
+        port_type: bridge
+  include_role:
+    name: rhel-system-roles.network
+
+# https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_net_module.html
+#
+
+- name: install RPM packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-libvirt
+    - python3-lxml
+
+# Define a new network
+- community.libvirt.virt_net:
+    command: define
+    name: pubbr0
+    xml: '{{ lookup("file", "net-pubbr0.xml") }}'
+
+# Start a network
+- community.libvirt.virt_net:
+    command: create
+    name: pubbr0
+
+# Ensure that a network is active (needs to be defined and built first)
+- community.libvirt.virt_net:
+    state: active
+    name: pubbr0
+
+# Ensure that a given network will be started at boot
+- community.libvirt.virt_net:
+    autostart: yes
+    name: pubbr0
