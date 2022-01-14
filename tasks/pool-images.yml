@@ -1,0 +1,23 @@
+# https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_pool_module.html
+#
+# Define a new storage pool
+- community.libvirt.virt_pool:
+    command: define
+    name: images
+    xml: '{{ lookup("file", "pool-images.xml") }}'
+
+# Start a storage pool
+- community.libvirt.virt_pool:
+    command: create
+    name: images
+
+# Ensure that a pool is active (needs to be defined and built first)
+- community.libvirt.virt_pool:
+    state: active
+    name: images
+
+# Ensure that a given pool will be started at boot
+- community.libvirt.virt_pool:
+    autostart: yes
+    name: images
+
