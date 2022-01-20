@@ -10,6 +10,7 @@
 - community.libvirt.virt_pool:
     command: create
     name: images
+  ignore_errors: yes
 
 # Ensure that a pool is active (needs to be defined and built first)
 - community.libvirt.virt_pool:

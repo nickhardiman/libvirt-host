@@ -1,0 +1,28 @@
+---
+- name: a new guest virtual machine 
+  hosts: localhost 
+  gather_facts: no
+  become: yes
+
+  tasks: 
+  # define and launch the guest
+  - name: define vm
+    community.libvirt.virt:
+      command: define
+      xml: "{{ lookup('file', 'vm-myfirstvm.xml') }}"
+
+  - name: start vm
+    community.libvirt.virt:
+      name: myfirstvm
+      state: running
+
+  - name: pull the plug
+    community.libvirt.virt:
+      name: myfirstvm
+      state: destroyed
+
+  - name: delete
+    community.libvirt.virt:
+      name: myfirstvm
+      command: undefine
+

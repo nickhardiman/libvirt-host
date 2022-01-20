@@ -3,7 +3,9 @@
 
 - name: Install the 'Virtualization Host' environment group
   dnf:
-    name: '@virtualization-host-environment'
+    name: 
+    - '@virtualization-host-environment'
+    - virt-install
     state: present
 
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_module.html
