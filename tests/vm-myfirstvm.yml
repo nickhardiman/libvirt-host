@@ -5,6 +5,28 @@
   become: yes
 
   tasks: 
+
+  - name: copy the downloaded KVM image file
+    ansible.builtin.copy:
+      src: /var/lib/libvirt/images/rhel-8.2-x86_64-kvm.qcow2
+      dest: /var/lib/libvirt/images/vm-myfirstvm.qcow2
+
+  - name: update pool catalog
+    community.libvirt.virt_pool:
+      name: images
+      command: refresh
+
+  # return code is 1 if the volume is missing
+  - name: check
+    ansible.builtin.command: 
+      cmd: virsh vol-info vm-myfirstvm.qcow2 images
+    register: r_vol_info
+
+  - name: display 
+    debug:
+      var: r_vol_info['stdout']
+
+
   # define and launch the guest
   - name: define vm
     community.libvirt.virt:
@@ -16,13 +38,29 @@
       name: myfirstvm
       state: running
 
+  - name: check
+    community.libvirt.virt:
+      name: myfirstvm
+      command: info
+
+  - name: display 
+    debug:
+      var: r_domain_info['stdout']
+
+
+  # clean up
   - name: pull the plug
     community.libvirt.virt:
       name: myfirstvm
       state: destroyed
 
-  - name: delete
+  - name: delete libvirt's domain
     community.libvirt.virt:
       name: myfirstvm
       command: undefine
+
+  #https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-storage_volume_commands-deleting_storage_volumes
+  - name: delete libvirt's volume
+    command: 
+      cmd: virsh vol-delete vm-myfirstvm images
 
