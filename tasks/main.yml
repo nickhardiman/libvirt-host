@@ -1,6 +1,7 @@
 ---
 
 - include_tasks: libvirt-modular-daemons.yml
-- include_tasks: linux-bridge.yml
+- include_tasks: linux-bridge-pubbr0.yml
+- include_tasks: linux-bridge-privbr0.yml
 - include_tasks: pool-images.yml
 
