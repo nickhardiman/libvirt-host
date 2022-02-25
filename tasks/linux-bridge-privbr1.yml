@@ -1,0 +1,23 @@
+# https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_net_module.html
+#
+# Define a new network
+- community.libvirt.virt_net:
+    command: define
+    name: private1
+    xml: '{{ lookup("file", "net-privbr1.xml") }}'
+
+# Start a network
+- community.libvirt.virt_net:
+    command: create
+    name: private1
+
+# Ensure that a network is active (needs to be defined and built first)
+- community.libvirt.virt_net:
+    state: active
+    name: private1
+
+# Ensure that a given network will be started at boot
+- community.libvirt.virt_net:
+    autostart: yes
+    name: private1
+

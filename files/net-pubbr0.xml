@@ -1,5 +1,6 @@
+<!-- /Users/nhardima/Documents/red-hat/product/virtualization/host1/net-pubbr0.xml -->
 <network>
-  <name>pubbr0</name>
+  <name>public0</name>
   <forward mode="bridge"/>
   <bridge name="pubbr0" />
 </network>

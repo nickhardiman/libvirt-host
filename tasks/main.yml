@@ -1,7 +1,12 @@
 ---
 
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: host1.lab.example.com
+
 - include_tasks: libvirt-modular-daemons.yml
 - include_tasks: linux-bridge-pubbr0.yml
 - include_tasks: linux-bridge-privbr0.yml
+- include_tasks: linux-bridge-privbr1.yml
 - include_tasks: pool-images.yml
 

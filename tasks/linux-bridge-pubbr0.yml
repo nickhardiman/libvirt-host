@@ -44,20 +44,20 @@
 # Define a new network
 - community.libvirt.virt_net:
     command: define
-    name: pubbr0
+    name: public0
     xml: '{{ lookup("file", "net-pubbr0.xml") }}'
 
 # Start a network
 - community.libvirt.virt_net:
     command: create
-    name: pubbr0
+    name: public0
 
 # Ensure that a network is active (needs to be defined and built first)
 - community.libvirt.virt_net:
     state: active
-    name: pubbr0
+    name: public0
 
 # Ensure that a given network will be started at boot
 - community.libvirt.virt_net:
     autostart: yes
-    name: pubbr0
+    name: public0

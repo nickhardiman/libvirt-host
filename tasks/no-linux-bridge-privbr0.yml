@@ -1,0 +1,9 @@
+# https://docs.ansible.com/ansible/latest/collections/community/libvirt/virt_net_module.html
+#
+# Remove network from the libvirt configuration
+- name:  Remove network from the libvirt configuration
+  community.libvirt.virt_net:
+    state: absent
+    name: privbr0
+
+
