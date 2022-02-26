@@ -1,7 +1,7 @@
-virtualization-host, an Ansible role
+libvirt-host, an Ansible role
 ====================================
 
-This role installs and runs the libvirt environment on a fresh RHEL 9 host. 
+This role sets up a libvirt environment on a fresh RHEL 9 host. 
 
 The role creates these resources. 
 I haven't got around to writing something to delete them and return to a shiny new state.
@@ -11,6 +11,7 @@ I haven't got around to writing something to delete them and return to a shiny n
 * libvirt networks _private0_ and _private1_. These are for experiments with administering those hard-to-reach places.
 
 I wrote this role to help me decipher https://libvirt.org/daemons.html.
+Try the libvirt-guest role after this (https://github.com/nickhardiman/libvirt-guest).
 
 Requirements
 ------------
