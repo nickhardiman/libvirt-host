@@ -1,31 +1,55 @@
-Role Name
-=========
+virtualization-host, an Ansible role
+====================================
 
-A brief description of the role goes here.
+This role installs and runs the libvirt environment on a fresh RHEL 9 host. 
+
+The role creates these resources. 
+I haven't got around to writing something to delete them and return to a shiny new state.
+
+* libvirt volume storage pool _images_. This is the default that would get created anyway. ISO files and disk images go here.
+* libvirt network _public0_. Virtual machines that serve the network go here. I don't touch the default NAT network _default_.
+* libvirt networks _private0_ and _private1_. These are for experiments with administering those hard-to-reach places.
+
+I wrote this role to help me decipher https://libvirt.org/daemons.html.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+A physical machine running RHEL 9. 
+
+To run the "myfirstvm" test playbook below, you need this 
+ready-made KVM file _/var/lib/libvirt/images/rhel-8.2-x86_64-kvm.qcow2_. Download this from https://access.redhat.com/downloads/. Sign up for free at https://developers.redhat.com/ to get access.
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+It's early days, so everything is hard-coded. 
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+community.libvirt
 
-Example Playbook
-----------------
+Example
+-------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Install everything.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+sudo dnf install ansible-core
+sudo ansible-galaxy collection install community.libvirt --collections-path /usr/share/ansible/collections/ansible_collections
+mkdir -p ~/ansible/roles
+cd ~/ansible/roles
+git clone https://github.com/nickhardiman/virtualization-host.git
+sudo ansible-playbook virtualization-host/tests/test.yml
+```
+
+Create and destroy a VM. 
+
+```
+sudo ansible-playbook virtualization-host/tests/vm-myfirstvm.yml
+```
 
 License
 -------
@@ -35,5 +59,5 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
-# virtualization-host
+Nick Hardiman
+

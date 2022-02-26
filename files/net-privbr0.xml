@@ -1,4 +1,4 @@
-<!-- /Users/nhardima/Documents/red-hat/product/virtualization/host1/net-pubbr0.xml -->
+<!-- libvirt network "private0", hooked up to bridge "privbr0" -->
 <network>
   <name>private0</name>
   <bridge name="privbr0"/>

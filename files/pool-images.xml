@@ -1,3 +1,4 @@
+<!-- libvirt volume pool "images" -->
 <pool type='dir'>
   <name>images</name>
   <target>
