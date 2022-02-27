@@ -42,14 +42,14 @@ sudo dnf install ansible-core
 sudo ansible-galaxy collection install community.libvirt --collections-path /usr/share/ansible/collections/ansible_collections
 mkdir -p ~/ansible/roles
 cd ~/ansible/roles
-git clone https://github.com/nickhardiman/virtualization-host.git
-sudo ansible-playbook virtualization-host/tests/test.yml
+git clone https://github.com/nickhardiman/libvirt-host.git
+sudo ansible-playbook libvirt-host/tests/test.yml
 ```
 
 Create and destroy a VM. 
 
 ```
-sudo ansible-playbook virtualization-host/tests/vm-myfirstvm.yml
+sudo ansible-playbook libvirt-host/tests/vm-myfirstvm.yml
 ```
 
 License
