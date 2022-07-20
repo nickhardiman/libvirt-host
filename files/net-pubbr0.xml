@@ -1,4 +1,4 @@
-<!-- /Users/nhardima/Documents/red-hat/product/virtualization/host1/net-pubbr0.xml -->
+<!-- libvirt config for creating a network bridge -->
 <network>
   <name>public0</name>
   <forward mode="bridge"/>

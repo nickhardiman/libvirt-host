@@ -5,6 +5,14 @@
     name: rhel-system-roles
     state: present
 
+- name: find the network interface name
+  set_fact:
+    ethernet_port: ansible_facts['default_ipv4']['interface']
+
+- name: display the name
+  debug:
+    var: ethernet_port
+
 # use gather_facts to set ansible_python
 - name: use rhel-system-role network
   vars:
@@ -20,10 +28,10 @@
           auto6: yes
       #
       # set an ethernet port to the bridge
-      - name: pubbr0-enp2s0f0
+      - name: "pubbr0-{{ ethernet_port }}"
         state: up
         type: ethernet
-        interface_name: enp2s0f0
+        interface_name: "{{ ethernet_port }}"
         controller: pubbr0
         #controller: public-bridge
         port_type: bridge
@@ -61,3 +69,4 @@
 - community.libvirt.virt_net:
     autostart: yes
     name: public0
+
