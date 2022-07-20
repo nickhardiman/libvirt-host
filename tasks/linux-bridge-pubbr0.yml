@@ -7,7 +7,7 @@
 
 - name: find the network interface name
   set_fact:
-    ethernet_port: ansible_facts['default_ipv4']['interface']
+    ethernet_port: "{{ ansible_facts['default_ipv4']['interface'] }}"
 
 - name: display the name
   debug:
